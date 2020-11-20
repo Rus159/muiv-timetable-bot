@@ -23,10 +23,10 @@ def get_picture(data):
     html_string = '<!DOCTYPE html>\n' + '<link rel="stylesheet" href="css.css">\n'+ '<html>\n' + '<table>\n'
 
     for day in data:
-        html_string += '<tr>\n<th>' + day.capitalize() + '</th>\n'
+        html_string += '<tr>\n<th>' + str(day).capitalize() + '</th>\n'
         pixel_count += 21
         for lesson in data[day].items():
-            html_string += '<tr><td>' + lesson[0] + '</td>\n' +\
+            html_string += '<tr><td>' + str(lesson[0]) + '</td>\n' +\
                 '<td>'+lesson[1][1] + '</td>' +\
                 '<td>'+lesson[1][0] + '</td></tr>\n'
             pixel_count += 79
@@ -37,5 +37,5 @@ def get_picture(data):
     hti.output_path = 'pictures/'
     pic_name = str(time.time()).replace('.', '') + '.png'
     hti.screenshot('timetable.html', pic_name, size=(600, pixel_count))
-    file = open('pictures/' + pic_name, 'rb')
+    file = open('pictures/' + pic_name, 'rb+')
     return file

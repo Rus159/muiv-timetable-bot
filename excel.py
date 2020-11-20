@@ -6,14 +6,14 @@ Unnamed [3-n]: [1-(n-2)] группа
 '''
 import pandas as pd
 import parse_link
-import urllib3
+import urllib
 import logging
 
 logging.basicConfig(format="%(levelname)s %(asctime)s %(message)s")
-
+urllib.request
 url = parse_link.parse()
 filename = list(url.split('iblock/'))[1][4:]
-urllib3.request.urlretrieve(url, filename)
+urllib.request.urlretrieve(url, filename)
 timetable = pd.ExcelFile(filename)
 user_xls_association = {}
 user_xls_file = []
@@ -53,5 +53,5 @@ def check_file_update():
         url = parse_link.parse()
         filename = list(url.split('iblock/'))[1][4:]
         print(filename)
-        urllib3.request.urlretrieve(url, filename)
+        urllib.request.urlretrieve(url, filename)
         logging.info('Файл обновлен')

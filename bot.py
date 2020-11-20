@@ -2,6 +2,7 @@ import os
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher, filters
 from aiogram.utils import executor
+from aiogram.types import ChatActions
 from dotenv import load_dotenv
 from keyboard import Keyboard
 from htmltopic import get_picture
@@ -49,6 +50,7 @@ async def process_group_button(message: types.Message):
     user_id = message.from_user.id
     if message.text in excel.\
        get_groupnames(excel.user_xls_file[excel.user_xls_association[user_id]]):
+        await bot.send_chat_action(user_id, ChatActions.UPLOAD_PHOTO)
         await message.reply_photo(get_picture(excel.\
             get_week_timetable(message.text, excel.user_xls_file[excel.user_xls_association[user_id]])))
 
