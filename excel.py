@@ -17,13 +17,17 @@ urllib.request.urlretrieve(url, filename)
 timetable = pd.ExcelFile(filename)
 user_xls_association = {}
 user_xls_file = []
-
+week_days = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота']
 def get_week_timetable(group, sheet):
     message = {}
     column = 'Unnamed: ' + str(int(list(group.split('.'))[1][0])+2)
-    for i in range(18, len(sheet)-10, 12):
+    days_index = []
+    for i in range(0, len(sheet)):
+        if sheet['Unnamed: 0'][i] in week_days:
+            days_index.append(i)
+    for i in days_index:
         lesson = {}
-        for j in range(i, i + 12, 2):
+        for j in range(i, i + 11, 2) if days_index.index(i) != len(days_index) - 1 else range(i, len(sheet)-1):
             if type(sheet[column][j]).__name__ != 'float':
                 lesson.update([(sheet['Unnamed: 2'][j], [sheet[column][j+1], sheet[column][j]])])
         message.update([(sheet['Unnamed: 0'][i], lesson)])
