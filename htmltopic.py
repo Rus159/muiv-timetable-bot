@@ -26,16 +26,17 @@ def get_picture(data):
         html_string += '<tr>\n<th>' + str(day).capitalize() + '</th>\n'
         pixel_count += 21
         for lesson in data[day].items():
-            html_string += '<tr><td>' + str(lesson[0]) + '</td>\n' +\
-                '<td>'+lesson[1][1] + '</td>' +\
-                '<td>'+lesson[1][0] + '</td></tr>\n'
-            pixel_count += 79
+            if type(lesson[0]).__name__ != 'float':
+                html_string += '<tr><td>' + lesson[0] + '</td>\n' +\
+                    '<td>'+lesson[1][1] + '</td>' +\
+                    '<td>'+lesson[1][0] + '</td></tr>\n'
+                pixel_count += 61
     html_string += '</table>\n' + '</html>'
     hti = HtmlToImage()
     hti.load_str(css_string, as_filename='css.css')
     hti.load_str(html_string, as_filename='timetable.html')
     hti.output_path = 'pictures/'
     pic_name = str(time.time()).replace('.', '') + '.png'
-    hti.screenshot('timetable.html', pic_name, size=(600, pixel_count))
+    hti.screenshot('timetable.html', pic_name, size=(800, pixel_count))
     file = open('pictures/' + pic_name, 'rb+')
     return file
