@@ -30,7 +30,7 @@ def get_picture(data):
                 html_string += '<tr><td>' + lesson[0] + '</td>\n' +\
                     '<td>'+lesson[1][1] + '</td>' +\
                     '<td>'+lesson[1][0] + '</td></tr>\n'
-                pixel_count += 61
+                pixel_count += 62
     html_string += '</table>\n' + '</html>'
     hti = HtmlToImage()
     hti.load_str(css_string, as_filename='css.css')
