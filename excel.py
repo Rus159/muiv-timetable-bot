@@ -17,7 +17,19 @@ urllib.request.urlretrieve(url, filename)
 timetable = pd.ExcelFile(filename)
 user_xls_association = {}
 user_xls_file = []
+courses_and_groups = {course: [] for course in timetable.sheet_names}
+
 week_days = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота']
+
+for course in timetable.sheet_names:
+    sheet = timetable.parse(course)
+    groups = []
+    for column in sheet.columns:
+        if column[-1] not in '012':
+            groups.append(sheet[column][15])
+    courses_and_groups.update([(course, groups)])
+
+
 def get_week_timetable(group, sheet):
     message = {}
     column = 'Unnamed: ' + str(int(list(group.split('.'))[1][0])+2)
@@ -59,3 +71,8 @@ def check_file_update():
         print(filename)
         urllib.request.urlretrieve(url, filename)
         logging.info('Файл обновлен')
+
+def get_course_from_group(group_name):
+    for course in courses_and_groups.keys():
+        if group_name in courses_and_groups[course]:
+            return course

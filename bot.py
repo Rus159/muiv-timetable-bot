@@ -48,6 +48,15 @@ async def process_course_button(message: types.Message):
 @dp.message_handler(filters.Text(contains='Д'))
 async def process_group_button(message: types.Message):
     user_id = message.from_user.id
+    if user_id not in excel.user_xls_association:
+        excel.user_xls_file.append(excel.excelFile())
+        excel.user_xls_association.update([(user_id, len(excel.user_xls_file)-1)])
+    else:
+        excel.user_xls_file[excel.user_xls_association[user_id]] = excel.excelFile()
+
+    excel.user_xls_file[excel.user_xls_association[user_id]] = excel.\
+        user_xls_file[excel.user_xls_association[user_id]].parse(sheet_name=excel.get_course_from_group(message.text))
+
     if message.text in excel.\
        get_groupnames(excel.user_xls_file[excel.user_xls_association[user_id]]):
         await bot.send_chat_action(user_id, ChatActions.UPLOAD_PHOTO)
